@@ -3,6 +3,17 @@ from src.item import Item
 
 item1 = Item("Планшет", 30000, 20)
 item2 = Item("Смарт-часы", 5000, 40)
+item3 = Item("Смартфон", 10000, 20)
+
+
+def test_repr():
+    assert item3.__repr__() == "Item('Смартфон', 10000, 20)"
+    assert item1.__repr__() == "Item('Планшет', 30000, 20)"
+
+
+def test_str():
+    assert item1.__str__() == 'Планшет'
+    assert item2.__str__() == 'Смарт-часы'
 
 
 def test_calculate_total_price():
@@ -20,16 +31,16 @@ def test_string_to_number():
     assert Item.string_to_number('2') == 2
 
 
-def test_name():
-    item1.name = "Печь"
-    assert item1.name == "Печь"
-    item1.name = 'Микроволновка'
-    assert item1.name == 'Микроволно'
-
-
 def test_instantiate_from_csv():
     Item.instantiate_from_csv()
     item_test = Item.all[3]
     assert item_test.name == 'Мышка'
     assert item_test.price == 50.0
     assert item_test.quantity == 5
+
+
+def test_name():
+    item1.name = "Печь"
+    assert item1.name == "Печь"
+    item1.name = 'Микроволновка'
+    assert item1.name == 'Микроволно'
