@@ -21,6 +21,10 @@ class Item:
         self.price = price
         self.__name = name
 
+    def __add__(self, other):
+        if not isinstance(other, Item):
+            raise ValueError('Объект не класса Item или Phone')
+        return self.quantity + other.quantity
 
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
@@ -38,11 +42,9 @@ class Item:
                 new_item = Item(reader[i][0], float(reader[i][1]), int(reader[i][2]))
                 Item.all.append(new_item)
 
-
     @staticmethod
     def string_to_number(number):
         return int(float(number))
-
 
     @property
     def name(self):
@@ -50,7 +52,7 @@ class Item:
 
     @name.setter
     def name(self, name):
-        if len(name) > 10:       # Тут можно сделать короче, но задание просит именно проверку на длинну
+        if len(name) > 10:  # Тут можно сделать короче, но задание просит именно проверку на длинну
             self.__name = name[:10]
         else:
             self.__name = name

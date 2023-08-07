@@ -1,9 +1,13 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
+import pytest
+
 from src.item import Item
+from src.phone import Phone
 
 item1 = Item("Планшет", 30000, 20)
 item2 = Item("Смарт-часы", 5000, 40)
 item3 = Item("Смартфон", 10000, 20)
+phone1 = Phone("iPhone 13", 80_000, 10, 4)
 
 
 def test_repr():
@@ -44,3 +48,10 @@ def test_name():
     assert item1.name == "Печь"
     item1.name = 'Микроволновка'
     assert item1.name == 'Микроволно'
+
+
+def test_add():
+    assert phone1 + item1 == 30
+    assert phone1 + item2 == 50
+    with pytest.raises(Exception):
+        phone1 + 10  # ValueError('Объект не класса Item или Phone')
