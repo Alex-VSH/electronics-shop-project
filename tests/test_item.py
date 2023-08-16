@@ -2,6 +2,7 @@
 import pytest
 
 from src.item import Item
+from src.item import InstantiateCSVError
 from src.phone import Phone
 
 item1 = Item("Планшет", 30000, 20)

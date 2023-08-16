@@ -36,12 +36,19 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         operation_path = os.path.join(os.path.dirname(__file__), "items.csv")
-        with open(operation_path, 'r', newline='') as csvfile:
-            reader = csv.reader(csvfile)
-            reader = list(reader)
-            for i in range(1, len(reader)):
-                new_item = Item(reader[i][0], float(reader[i][1]), int(reader[i][2]))
-                Item.all.append(new_item)
+        try:
+            with open(operation_path, 'r', newline='') as csvfile:
+                reader = csv.reader(csvfile)
+                reader = list(reader)
+                if len(reader) != 6:  # Здесь идет проверка на количество строк в файле
+                    raise InstantiateCSVError
+                for i in range(1, len(reader)):
+                    new_item = Item(reader[i][0], float(reader[i][1]), int(reader[i][2]))
+                    Item.all.append(new_item)
+        except FileNotFoundError:
+            print('Отсутствует файл item.csv')
+        except InstantiateCSVError as ex:
+            print(ex.message)
 
     @staticmethod
     def string_to_number(number):
@@ -72,3 +79,9 @@ class Item:
         Применяет установленную скидку для конкретного товара.
         """
         self.price = self.price * Item.pay_rate
+
+
+class InstantiateCSVError(Exception):
+
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else 'Файл item.csv поврежден'
