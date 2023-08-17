@@ -58,6 +58,7 @@ def test_add():
 
 
 def test_instantiate_from_csv_exceptions():
+    assert Item.instantiate_from_csv('items_test1.csv') == None
     assert Item.instantiate_from_csv('items_test111.csv') == 'Отсутствует файл items_test111.csv'
     assert Item.instantiate_from_csv('items_test2.csv') == 'Файл item.csv поврежден'
 
