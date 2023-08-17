@@ -2,7 +2,6 @@
 import pytest
 
 from src.item import Item
-from src.item import InstantiateCSVError
 from src.phone import Phone
 
 item1 = Item("Планшет", 30000, 20)
@@ -56,3 +55,9 @@ def test_add():
     assert phone1 + item2 == 50
     with pytest.raises(Exception):
         phone1 + 10  # ValueError('Объект не класса Item или Phone')
+
+
+def test_instantiate_from_csv_exceptions():
+    assert Item.instantiate_from_csv('items_test111.csv') == 'Отсутствует файл items_test111.csv'
+    assert Item.instantiate_from_csv('items_test2.csv') == 'Файл item.csv поврежден'
+

@@ -34,8 +34,8 @@ class Item:
         return f'{self.__name}'
 
     @classmethod
-    def instantiate_from_csv(cls):
-        operation_path = os.path.join(os.path.dirname(__file__), "items.csv")
+    def instantiate_from_csv(cls, file_name="items.csv"):
+        operation_path = os.path.join(os.path.dirname(__file__), file_name)
         try:
             with open(operation_path, 'r', newline='') as csvfile:
                 reader = csv.reader(csvfile)
@@ -46,9 +46,11 @@ class Item:
                     new_item = Item(reader[i][0], float(reader[i][1]), int(reader[i][2]))
                     Item.all.append(new_item)
         except FileNotFoundError:
-            print('Отсутствует файл item.csv')
+            print(f'Отсутствует файл {file_name}')
+            return f'Отсутствует файл {file_name}'
         except InstantiateCSVError as ex:
             print(ex.message)
+            return ex.message
 
     @staticmethod
     def string_to_number(number):
